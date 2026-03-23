@@ -22,17 +22,17 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.14  # Убедитесь, что версия указана корректно
-          docker_layer_caching: true  # Опционально: ускоряет сборку
+          version: 20.10.14
+          docker_layer_caching: true
       - run:
           name: Проверка Docker
-          command: docker --version  # Добавьте проверку Docker
+          command: docker --version
       - run:
           name: Сборка Docker-образа
           command: |
-            ls -la  # Проверьте, что Dockerfile существует
+            ls -la
             docker build -t flask-todo-app:latest .
-            docker images  # Проверьте, что образ создался
+            docker images
       - run:
           name: Проверка сборки
           command: |
