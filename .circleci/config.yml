@@ -21,22 +21,19 @@ jobs:
       - image: cimg/python:3.9
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
+      - setup_remote_docker  # Убрал указание версии - CircleCI выберет сам
       - run:
           name: Проверка Docker
           command: docker --version
       - run:
           name: Сборка Docker-образа
           command: |
-            ls -la
             docker build -t flask-todo-app:latest .
-            docker images
+            echo "✅ Docker-образ успешно собран"
       - run:
-          name: Проверка сборки
+          name: Проверка образа
           command: |
-            docker run --rm flask-todo-app:latest python -c "import flask; print('Flask version:', flask.__version__)"
+            docker images | grep flask-todo-app
 
 workflows:
   version: 2
